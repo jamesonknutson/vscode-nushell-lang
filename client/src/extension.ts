@@ -135,6 +135,8 @@ export function activate(context: vscode.ExtensionContext) {
     },
   };
 
+  serverOptions.debug;
+
   // Options to control the language client
   const clientOptions: LanguageClientOptions = {
     // Register the server for plain text documents

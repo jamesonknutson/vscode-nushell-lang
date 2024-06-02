@@ -28,6 +28,7 @@ import {
   Position,
 } from 'vscode-languageserver-protocol';
 
+import execa from 'execa';
 import { TextEncoder } from 'node:util';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { URI } from 'vscode-uri';
@@ -258,13 +259,21 @@ async function validateTextDocument(
       const text = textDocument.getText();
       const lineBreaks = findLineBreaks(text);
 
-      const stdout = await runCompiler(
+      /* const stdout = await runCompiler(
         text,
         '--ide-check',
         settings,
         textDocument.uri,
         { label: label },
-      );
+      ); */
+
+      const stdout = await knutCompiler({
+        label,
+        settings,
+        mode: 'ide-check',
+        text,
+        uri: textDocument.uri,
+      });
 
       textDocument.nuInlayHints = [];
       const diagnostics: Diagnostic[] = [];
@@ -398,6 +407,129 @@ function convertPosition(position: Position, text: string): number {
   return i;
 }
 
+interface KnutCompileOptions {
+  allowErrors?: boolean;
+  settings: NushellIDESettings;
+  label?: string;
+  uri: string;
+  text: string;
+  mode: 'ide-complete' | 'ide-hover' | 'ide-check' | 'ide-goto-def';
+  offset?: number;
+}
+
+function getFileSystemPathFor(input: string | URI) {
+  return path.normalize(
+    typeof input === 'string'
+      ? input.startsWith('file:')
+        ? URI.parse(input).fsPath
+        : URI.file(input).fsPath
+      : input.fsPath,
+  );
+}
+
+function getFsPathKey(input: string) {
+  return path
+    .normalize(input)
+    .toLowerCase()
+    .replace(/[\\/]+/g, '/');
+}
+
+const lookups = new Map<string, Promise<string>>();
+async function getDirFor(input: string | URI): Promise<string> {
+  const usePath = getFileSystemPathFor(input);
+  const cacheKey = getFsPathKey(usePath);
+  connection.console.log(
+    `normalizedPath from ${input} (is URI: ${input instanceof URI}): ${usePath}`,
+  );
+  const cached = lookups.get(cacheKey);
+  if (cached) {
+    return await cached;
+  }
+
+  const p = (async () => {
+    const stats = await fs.promises.stat(usePath);
+    if (stats.isDirectory()) {
+      return usePath;
+    } else if (stats.isFile()) {
+      return await getDirFor(path.dirname(usePath));
+    } else {
+      throw new Error(`Failed to get directory for ${usePath}`);
+    }
+  })();
+
+  lookups.set(cacheKey, p);
+  return await p;
+}
+
+async function getIncludeDirsFor(uri: string, settings: NushellIDESettings) {
+  return [
+    ...new Set(
+      await Promise.all([uri, ...settings.includeDirs].map(getDirFor)),
+    ),
+  ];
+}
+
+async function knutCompiler({
+  label = 'knutCompiler',
+  mode,
+  settings,
+  text,
+  uri,
+  allowErrors,
+  offset,
+}: KnutCompileOptions) {
+  const _allowErrors = allowErrors === undefined ? true : allowErrors;
+
+  try {
+    fs.writeFileSync(tmpFile.name, text);
+  } catch (e: any) {
+    connection.console.error(`[${label}] error writing to tmp file: ${e}`);
+  }
+
+  let stdout = '';
+  try {
+    const includeDirs = await getIncludeDirsFor(uri, settings);
+    if (includeDirs.length === 1) {
+      includeDirs.push('');
+    }
+
+    const jointDirs = includeDirs.join('\x1e');
+    const execaArgs: string[] = [`--${mode}`];
+
+    if (typeof offset === 'number') {
+      execaArgs.push(offset.toString());
+    } else if (mode === 'ide-check') {
+      execaArgs.push(settings.maxNumberOfProblems.toString());
+    }
+
+    if (includeDirs.length > 0) {
+      execaArgs.push(`--include-path`, jointDirs);
+    }
+
+    execaArgs.push(tmpFile.name);
+
+    connection.console.log(
+      `[${label}] running: ${settings.nushellExecutablePath} ${execaArgs.join(' ')}`,
+    );
+
+    const result = await execa(settings.nushellExecutablePath, execaArgs, {
+      timeout: settings.maxNushellInvocationTime,
+    });
+
+    connection.console.log(`[${label}] used command: ${result.escapedCommand}`);
+    connection.console.log(`[${label}] stdout: ${result.stdout}`);
+    return result.stdout;
+  } catch (e: any) {
+    stdout = e.stdout;
+    connection.console.log(`[${label}] compile failed: ` + e);
+    if (!_allowErrors) {
+      throw e;
+    }
+  }
+
+  return stdout;
+}
+
 async function runCompiler(
   text: string, // this is the script or the snippet of nushell code
   flags: string,
@@ -467,12 +599,20 @@ connection.onHover(async (request: HoverParams) => {
     // connection.console.log("request: ");
     // connection.console.log(request.textDocument.uri);
     // connection.console.log("index: " + convertPosition(request.position, text));
-    const stdout = await runCompiler(
+    /* const stdout = await runCompiler(
       text,
       '--ide-hover ' + convertPosition(request.position, text),
       settings,
       request.textDocument.uri,
-    );
+    ); */
+
+    const stdout = await knutCompiler({
+      settings,
+      mode: 'ide-hover',
+      offset: convertPosition(request.position, text),
+      text,
+      uri: request.textDocument.uri,
+    });
 
     const lines = stdout.split('\n').filter((l) => l.length > 0);
     for (const line of lines) {
@@ -528,33 +668,48 @@ connection.onCompletion(
         // connection.console.log(request.textDocument.uri);
         const index = convertPosition(request.position, text);
         // connection.console.log("index: " + index);
-        const stdout = await runCompiler(
+        /* const stdout = await runCompiler(
           text,
           '--ide-complete ' + index,
           settings,
           request.textDocument.uri,
-        );
+        ); */
+        const stdout = await knutCompiler({
+          text,
+          mode: 'ide-complete',
+          offset: index,
+          settings,
+          uri: request.textDocument.uri,
+        });
         // connection.console.log("got: " + stdout);
 
-        const lines = stdout.split('\n').filter((l) => l.length > 0);
+        const lines = stdout
+          .split(/\r?\n/gm)
+          .map((l) => l.trim())
+          .filter((l) => l.length > 0);
         for (const line of lines) {
-          const obj = JSON.parse(line);
-          // connection.console.log("completions");
-          // connection.console.log(obj);
+          const fixedLine = line.replace(/\\+/g, '/');
+          try {
+            const obj = JSON.parse(fixedLine);
+            // connection.console.log("completions");
+            // connection.console.log(obj);
 
-          const output = [];
-          let index = 1;
-          for (const completion of obj.completions) {
-            output.push({
-              label: completion,
-              kind: completion.includes('(')
-                ? CompletionItemKind.Function
-                : CompletionItemKind.Field,
-              data: index,
-            });
-            index++;
+            const output = [];
+            let index = 1;
+            for (const completion of obj.completions) {
+              output.push({
+                label: completion,
+                kind: completion.includes('(')
+                  ? CompletionItemKind.Function
+                  : CompletionItemKind.Field,
+                data: index,
+              });
+              index++;
+            }
+            return output;
+          } catch (error) {
+            connection.console.error(`error: ${error}`);
           }
-          return output;
         }
       }
 
@@ -573,13 +728,21 @@ connection.onDefinition(async (request) => {
 
     // connection.console.log(`[${label}] request: ${request.textDocument.uri}`);
     // connection.console.log("index: " + convertPosition(request.position, text));
-    const stdout = await runCompiler(
+    /* const stdout = await runCompiler(
       text,
       '--ide-goto-def ' + convertPosition(request.position, text),
       settings,
       request.textDocument.uri,
       { label: label },
-    );
+    ); */
+    const stdout = await knutCompiler({
+      text,
+      settings,
+      uri: request.textDocument.uri,
+      label,
+      mode: 'ide-goto-def',
+      offset: convertPosition(request.position, text),
+    });
     return goToDefinition(document, stdout);
   });
 });

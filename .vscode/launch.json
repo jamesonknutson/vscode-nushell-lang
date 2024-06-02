@@ -7,11 +7,24 @@
       "request": "launch",
       "name": "Launch Client",
       "runtimeExecutable": "${execPath}",
-      "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
+      "args": [
+        "--extensionDevelopmentPath=${workspaceRoot}"
+      ],
       "preLaunchTask": {
         "type": "npm",
         "script": "compile"
-      }
+      },
+      "autoAttachChildProcesses": true,
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Server",
+      "port": 6009,
+      "restart": true,
+      "outFiles": [
+        "${workspaceRoot}/out/server/**/*.js"
+      ]
     },
     {
       "name": "Language Server E2E Test",
