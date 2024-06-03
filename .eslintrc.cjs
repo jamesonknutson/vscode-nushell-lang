@@ -20,6 +20,8 @@ module.exports = {
   ignorePatterns: ['**/out', '**/dist', '**/.eslintrc.json', '**/.prettierrc.json', '**/.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   rules: {
+    'eslint/require-await': 'off',
+    'unicorn/import-style': 'off',
     'unicorn/empty-brace-spaces': 'off',
     '@typescript-eslint/prefer-for-of': 'off',
     'no-empty': 'off',
@@ -58,7 +60,6 @@ module.exports = {
         allowTemplateLiterals: true,
       },
     ],
-    'require-await': ['error'],
     'semi': ['warn', 'never'],
     'unicorn/no-abusive-eslint-disable': 'off',
     'unicorn/no-array-callback-reference': 'off',
