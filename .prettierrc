@@ -1,4 +1,21 @@
 {
-  "$schema": "https://json.schemastore.org/prettierrc",
-  "singleQuote": true
+	"parser": "typescript",
+	"printWidth": 120,
+	"semi": false,
+	"singleQuote": true,
+	"arrowParens": "avoid",
+	"bracketSpacing": true,
+	"endOfLine": "lf",
+	"useTabs": false,
+	"tabWidth": 2,
+	"trailingComma": "all",
+	"quoteProps": "consistent",
+	"jsxSingleQuote": true,
+	"plugins": [
+		"./node_modules/prettier-plugin-jsdoc/dist/index.js"
+	],
+	"jsdocDescriptionTag": false,
+	"jsdocPreferCodeFences": true,
+	"jsdocPrintWidth": 100,
+	"jsdocSingleLineComment": false
 }

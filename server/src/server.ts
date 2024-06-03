@@ -3,35 +3,39 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import {
-  CompletionItem,
-  CompletionItemKind,
-  Definition,
-  Diagnostic,
-  DiagnosticSeverity,
-  DidChangeConfigurationNotification,
-  HandlerResult,
-  HoverParams,
-  InitializeParams,
-  InitializeResult,
-  ProposedFeatures,
-  TextDocumentPositionParams,
-  TextDocumentSyncKind,
-  TextDocuments,
-  createConnection,
-} from 'vscode-languageserver/node';
+	CompletionItem,
+	CompletionItemKind,
+	Definition,
+	Diagnostic,
+	DiagnosticSeverity,
+	DidChangeConfigurationNotification,
+	HandlerResult,
+	Hover,
+	HoverParams,
+	InitializeParams,
+	InitializeResult,
+	MarkupContent,
+	MarkupKind,
+	ProposedFeatures,
+	ServerRequestHandler,
+	TextDocumentPositionParams,
+	TextDocumentSyncKind,
+	TextDocuments,
+	createConnection,
+} from 'vscode-languageserver/node'
 
 import {
-  InlayHint,
-  InlayHintKind,
-  InlayHintLabelPart,
-  InlayHintParams,
-  Position,
-} from 'vscode-languageserver-protocol';
+	InlayHint,
+	InlayHintKind,
+	InlayHintLabelPart,
+	InlayHintParams,
+	Position,
+} from 'vscode-languageserver-protocol'
 
-import execa from 'execa';
-import { TextEncoder } from 'node:util';
-import { TextDocument } from 'vscode-languageserver-textdocument';
-import { URI } from 'vscode-uri';
+import execa from 'execa'
+import { TextEncoder } from 'node:util'
+import { TextDocument } from 'vscode-languageserver-textdocument'
+import { URI } from 'vscode-uri'
 
 interface NuTextDocument extends TextDocument {
   nuInlayHints?: InlayHint[];
@@ -622,9 +626,9 @@ connection.onHover(async (request: HoverParams) => {
 
       // FIXME: Figure out how to import `vscode` package in server.ts without
       // getting runtime import errors to remove this deprecation warning.
-      const contents = {
+      const contents: MarkupContent = {
         value: obj.hover,
-        kind: 'markdown',
+        kind: MarkupKind.Markdown
       };
 
       if (obj.hover != '') {
@@ -647,6 +651,8 @@ connection.onHover(async (request: HoverParams) => {
         }
       }
     }
+		
+		// return null
   });
 });
 
