@@ -183,7 +183,7 @@
 			"name": "keyword.control.nushell"
 		},
 		"comment": {
-			"match": "(#.*)$",
+			"match": "(?<!r|')(#.*)$",
 			"name": "comment.nushell"
 		},
 		"keyword": {
