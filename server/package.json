@@ -13,16 +13,16 @@
     "node": "*"
   },
   "dependencies": {
-    "@types/vscode": "^1.67.0",
+    "@types/vscode": "^1.89.0",
     "execa": "^5.1.1",
-    "jsonrepair": "^3.6.1",
-    "tmp": "^0.2.1",
-    "vscode-languageserver": "^8.1.0",
-    "vscode-languageserver-textdocument": "^1.0.8",
-    "vscode-uri": "^3.0.7"
+    "jsonrepair": "^3.8.0",
+    "tmp": "^0.2.3",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.11",
+    "vscode-uri": "^3.0.8"
   },
   "devDependencies": {
-    "@types/tmp": "^0.2.3"
+    "@types/tmp": "^0.2.6"
   },
   "scripts": {}
 }
