@@ -167,3 +167,5 @@ All notable changes to the "vscode-nushell-lang" extension will be documented in
   - Add spread to syntax highlighting [#174](https://github.com/nushell/vscode-nushell-lang/pull/174)
   - fix markdown formatting for hover lsp [#175](https://github.com/nushell/vscode-nushell-lang/pull/175)
   - update grammar for nushell 0.91.0 [#177](https://github.com/nushell/vscode-nushell-lang/pull/177)
+- 1.9.1
+  - Add support for raw string syntax [from nushell 0.94.0](https://www.nushell.sh/blog/2024-05-28-nushell_0_94_0.html#new-language-feature-raw-strings-toc)
