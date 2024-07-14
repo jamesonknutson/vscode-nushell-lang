@@ -10,9 +10,12 @@ import {
   DiagnosticSeverity,
   DidChangeConfigurationNotification,
   HandlerResult,
+  Hover,
   HoverParams,
   InitializeParams,
   InitializeResult,
+  MarkupContent,
+  MarkupKind,
   ProposedFeatures,
   TextDocumentPositionParams,
   TextDocumentSyncKind,
@@ -456,58 +459,58 @@ async function runCompiler(
 }
 
 connection.onHover(async (request: HoverParams) => {
-  return await durationLogWrapper(`onHover`, async () => {
-    const document = documents.get(request.textDocument.uri);
-    const settings = await getDocumentSettings(request.textDocument.uri);
+  return await durationLogWrapper(
+    `onHover`,
+    async (): Promise<Hover | undefined | null> => {
+      const document = documents.get(request.textDocument.uri);
+      const settings = await getDocumentSettings(request.textDocument.uri);
 
-    const text = document?.getText();
+      const text = document?.getText();
 
-    if (!(typeof text == 'string')) return null;
+      if (!(typeof text == 'string')) return null;
 
-    // connection.console.log("request: ");
-    // connection.console.log(request.textDocument.uri);
-    // connection.console.log("index: " + convertPosition(request.position, text));
-    const stdout = await runCompiler(
-      text,
-      '--ide-hover ' + convertPosition(request.position, text),
-      settings,
-      request.textDocument.uri,
-    );
+      // connection.console.log("request: ");
+      // connection.console.log(request.textDocument.uri);
+      // connection.console.log("index: " + convertPosition(request.position, text));
+      const stdout = await runCompiler(
+        text,
+        '--ide-hover ' + convertPosition(request.position, text),
+        settings,
+        request.textDocument.uri,
+      );
 
-    const lines = stdout.split('\n').filter((l) => l.length > 0);
-    for (const line of lines) {
-      const obj = JSON.parse(line);
-      // connection.console.log("hovering");
-      // connection.console.log(obj);
+      const lines = stdout.split('\n').filter((l) => l.length > 0);
+      for (const line of lines) {
+        const obj = JSON.parse(line);
+        // connection.console.log("hovering");
+        // connection.console.log(obj);
+        const contents: MarkupContent = {
+          value: obj.hover,
+          kind: MarkupKind.Markdown,
+        };
 
-      // FIXME: Figure out how to import `vscode` package in server.ts without
-      // getting runtime import errors to remove this deprecation warning.
-      const contents = {
-        value: obj.hover,
-        kind: 'markdown',
-      };
+        if (obj.hover != '') {
+          if (obj.span) {
+            const lineBreaks = findLineBreaks(
+              obj.file
+                ? (await fs.promises.readFile(obj.file)).toString()
+                : document?.getText() ?? '',
+            );
 
-      if (obj.hover != '') {
-        if (obj.span) {
-          const lineBreaks = findLineBreaks(
-            obj.file
-              ? (await fs.promises.readFile(obj.file)).toString()
-              : document?.getText() ?? '',
-          );
-
-          return {
-            contents,
-            range: {
-              start: convertSpan(obj.span.start, lineBreaks),
-              end: convertSpan(obj.span.end, lineBreaks),
-            },
-          };
-        } else {
-          return { contents };
+            return {
+              contents,
+              range: {
+                start: convertSpan(obj.span.start, lineBreaks),
+                end: convertSpan(obj.span.end, lineBreaks),
+              },
+            };
+          } else {
+            return { contents };
+          }
         }
       }
-    }
-  });
+    },
+  );
 });
 
 // This handler provides the initial list of the completion items.
