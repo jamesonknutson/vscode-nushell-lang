@@ -3,15 +3,29 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Attach",
+      "port": 6009,
+      "request": "attach",
+      "type": "node",
+      "outFiles": [
+        "${workspaceFolder}/**/out/**/*.(m|c|d.|)(t|j)s",
+        "${workspaceFolder}/**/out/**/*.(m|c|d.|)(t|j)s.map",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "autoAttachChildProcesses": true,
       "type": "extensionHost",
       "request": "launch",
       "name": "Launch Client",
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
-      "preLaunchTask": {
-        "type": "npm",
-        "script": "compile"
-      }
+      "preLaunchTask": "${defaultBuildTask}",
+      "outFiles": [
+        "${workspaceFolder}/**/out/**/*.(m|c|d.|)(t|j)s",
+        "${workspaceFolder}/**/out/**/*.(m|c|d.|)(t|j)s.map",
+        "!**/node_modules/**"
+      ]
     },
     {
       "name": "Language Server E2E Test",

@@ -8,7 +8,9 @@
     "strict": true,
     "outDir": "out",
     "rootDir": "src",
-		"composite": true
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src"],
   "exclude": ["node_modules", ".vscode-test"]

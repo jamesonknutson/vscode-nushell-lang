@@ -141,7 +141,7 @@ export function activate(context: vscode.ExtensionContext) {
     documentSelector: [{ scheme: 'file', language: 'nushell' }],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
-      fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc'),
+      fileEvents: vscode.workspace.createFileSystemWatcher('**/.nu'),
     },
     markdown: {
       isTrusted: true,
@@ -154,6 +154,10 @@ export function activate(context: vscode.ExtensionContext) {
     'Nushell Language Server',
     serverOptions,
     clientOptions,
+  );
+
+  console.log(
+    `Launched client, server should be listening, debug options: ${debugOptions}`,
   );
 
   // Start the client. This will also launch the server
