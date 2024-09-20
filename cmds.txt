@@ -1,0 +1,467 @@
+alias
+all
+ansi
+ansi gradient
+ansi link
+ansi strip
+any
+append
+assert
+assert equal
+assert error
+assert greater
+assert greater or equal
+assert length
+assert less
+assert less or equal
+assert not
+assert not equal
+assert str contains
+ast
+banner
+bench
+bits
+bits and
+bits not
+bits or
+bits rol
+bits ror
+bits shl
+bits shr
+bits xor
+break
+bytes
+bytes add
+bytes at
+bytes build
+bytes collect
+bytes ends-with
+bytes index-of
+bytes length
+bytes remove
+bytes replace
+bytes reverse
+bytes starts-with
+cal
+cd
+char
+chunks
+clear
+collect
+columns
+commandline
+commandline edit
+commandline get-cursor
+commandline set-cursor
+compact
+complete
+config
+config env
+config nu
+config reset
+const
+continue
+cp
+date
+date format
+date humanize
+date list-timezone
+date now
+date to-record
+date to-table
+date to-timezone
+debug
+debug info
+debug profile
+decode
+decode base64
+decode hex
+def
+default
+describe
+detect columns
+dirs add
+dirs drop
+dirs goto
+dirs next
+dirs prev
+dirs show
+do
+drop
+drop column
+drop nth
+dt datetime-diff
+dt pretty-print-duration
+du
+each
+each while
+echo
+ellie
+encode
+encode base64
+encode hex
+enumerate
+error make
+every
+exec
+exit
+explain
+explore
+export
+export alias
+export const
+export def
+export extern
+export module
+export use
+export-env
+extern
+fill
+filter
+find
+first
+flatten
+fmt
+for
+format
+format date
+format duration
+format filesize
+format pattern
+formats from jsonl
+formats from ndjson
+formats to jsonl
+formats to ndjson
+from
+from csv
+from json
+from msgpack
+from msgpackz
+from nuon
+from ods
+from ssv
+from toml
+from tsv
+from url
+from xlsx
+from xml
+from yaml
+from yml
+generate
+get
+glob
+grid
+group
+group-by
+hash
+hash md5
+hash sha256
+headers
+help
+help aliases
+help commands
+help escapes
+help externs
+help modules
+help operators
+hide
+hide-env
+histogram
+history
+history session
+http
+http delete
+http get
+http head
+http options
+http patch
+http post
+http put
+if
+ignore
+input
+input display
+input list
+input listen
+insert
+inspect
+interleave
+into
+into binary
+into bits
+into bool
+into cell-path
+into datetime
+into duration
+into filesize
+into float
+into glob
+into int
+into record
+into sqlite
+into string
+into value
+is-admin
+is-empty
+is-not-empty
+is-terminal
+items
+iter filter-map
+iter find
+iter find-index
+iter flat-map
+iter intersperse
+iter scan
+iter zip-into-record
+iter zip-with
+join
+keybindings
+keybindings default
+keybindings list
+keybindings listen
+kill
+last
+length
+let
+let-env
+lines
+load-env
+log
+log critical
+log custom
+log debug
+log error
+log info
+log log-ansi
+log log-level
+log log-prefix
+log log-short-prefix
+log warning
+loop
+ls
+match
+math
+math abs
+math arccos
+math arccosh
+math arcsin
+math arcsinh
+math arctan
+math arctanh
+math avg
+math ceil
+math cos
+math cosh
+math exp
+math floor
+math ln
+math log
+math max
+math median
+math min
+math mode
+math product
+math round
+math sin
+math sinh
+math sqrt
+math stddev
+math sum
+math tan
+math tanh
+math variance
+merge
+metadata
+metadata set
+mkdir
+mktemp
+module
+move
+mut
+mv
+nu-check
+nu-highlight
+null-device
+open
+overlay
+overlay hide
+overlay list
+overlay new
+overlay use
+panic
+par-each
+parse
+path
+path add
+path basename
+path dirname
+path exists
+path expand
+path join
+path parse
+path relative-to
+path split
+path type
+plugin
+plugin add
+plugin list
+plugin rm
+plugin stop
+plugin use
+port
+prepend
+print
+ps
+pwd
+query db
+random
+random bool
+random chars
+random dice
+random float
+random int
+random uuid
+range
+reduce
+registry query
+reject
+rename
+repeat
+return
+reverse
+rm
+roll
+roll down
+roll left
+roll right
+roll up
+rotate
+run-external
+save
+schema
+scope
+scope aliases
+scope commands
+scope engine-stats
+scope externs
+scope modules
+scope variables
+select
+seq
+seq char
+seq date
+shuffle
+skip
+skip until
+skip while
+sleep
+sort
+sort-by
+source
+source-env
+split
+split chars
+split column
+split list
+split row
+split words
+split-by
+start
+stor
+stor create
+stor delete
+stor export
+stor import
+stor insert
+stor open
+stor reset
+stor update
+str
+str camel-case
+str capitalize
+str contains
+str deunicode
+str distance
+str downcase
+str ends-with
+str expand
+str index-of
+str join
+str kebab-case
+str length
+str pascal-case
+str replace
+str reverse
+str screaming-snake-case
+str snake-case
+str starts-with
+str stats
+str substring
+str title-case
+str trim
+str upcase
+sys
+sys cpu
+sys disks
+sys host
+sys mem
+sys net
+sys temp
+sys users
+table
+take
+take until
+take while
+tee
+term size
+timeit
+to
+to csv
+to html
+to json
+to md
+to msgpack
+to msgpackz
+to nuon
+to text
+to toml
+to tsv
+to xml
+to yaml
+touch
+transpose
+try
+tutor
+uname
+uniq
+uniq-by
+update
+update cells
+upsert
+url
+url build-query
+url decode
+url encode
+url join
+url parse
+use
+values
+version
+view
+view files
+view ir
+view source
+view span
+watch
+where
+which
+while
+whoami
+window
+with-env
+wrap
+xml xaccess
+xml xinsert
+xml xtype
+xml xupdate
+zip

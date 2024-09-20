@@ -7,11 +7,25 @@
       "request": "launch",
       "name": "Launch Client",
       "runtimeExecutable": "${execPath}",
-      "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
+      "args": [
+        "--extensionDevelopmentPath=${workspaceRoot}",
+        "G:/dotfiles/.config/nushell"
+      ],
       "preLaunchTask": {
         "type": "npm",
         "script": "compile"
       }
+    },
+    {
+      "name": "Attach to Server",
+      "type": "node",
+      "request": "attach",
+      // "protocol": "inspector",
+      "resolveSourceMapLocations": ["${workspaceFolder}/**"],
+      "sourceMapRenames": true,
+      "port": 6009,
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/**/*.(m|c|d|)(j|t)s"]
     },
     {
       "name": "Language Server E2E Test",
