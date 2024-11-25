@@ -40,13 +40,19 @@ import { URI } from 'vscode-uri';
 interface NuTextDocument extends TextDocument {
   nuInlayHints?: InlayHint[];
 }
-import fs = require('fs');
-import tmp = require('tmp');
-import path = require('path');
 
-import util = require('node:util');
+// import fs = require('fs');
+import * as fs from 'fs';
+// import path = require('path');
+import * as path from 'path';
+// import tmp = require('tmp');
+import * as tmp from 'tmp';
+
+// import util = require('node:util');
 
 import type { exec as _exec } from 'node:child_process';
+import * as child_process from 'node:child_process';
+import * as util from 'node:util';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const exec = util.promisify(
