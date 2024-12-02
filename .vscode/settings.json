@@ -1,13 +1,8 @@
 {
-  "editor.insertSpaces": false,
-  "typescript.tsc.autoDetect": "off",
-  "typescript.preferences.quoteStyle": "single",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "workbench.colorCustomizations": {
+	"editor.insertSpaces": false,
+	"typescript.tsc.autoDetect": "off",
+	"typescript.preferences.quoteStyle": "single",
+	"workbench.colorCustomizations": {
 		"activityBar.activeBackground": "#1f6fd077",
 		"activityBar.background": "#1f6fd077",
 		"activityBarBadge.background": "#ee90bb",
@@ -19,33 +14,9 @@
 		"titleBar.activeBackground": "#1857a477",
 		"titleBar.inactiveBackground": "#1857a499"
 	},
-  "peacock.color": "#1857a477",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    "**/test*": true,
-    "**/snippets": true,
-    "**/scripts": true,
-    "**/node_modules": true,
-    "src/": true,
-    ".github": true,
-    ".eslintrc.js": true,
-    ".eslintignore": true,
-    ".gitattributes": true,
-    ".gitignore": true,
-    ".prettierignore": true,
-    ".prettierrc": true,
-    ".vscodeignore": true,
-    "biome.json": true,
-    "*.nu": true,
-    "LICENSE": true,
-    "*.theme*.json": true,
-    "**/*.tsbuildinfo": true,
-    "used_*": true,
-    "assets": true
-  }
+	"peacock.color": "#1857a477",
+	"editor.defaultFormatter": "biomejs.biome",
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
 }

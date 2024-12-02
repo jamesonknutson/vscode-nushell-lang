@@ -9,6 +9,16 @@ server/**
 
 scripts/**
 node_modules/**
+snippets/**
 
 .gitignore
 .eslintignore
+
+.prettierignore
+biome.json
+cmds.txt
+cmds*.txt
+*.nu
+*cmds*.txt
+*.tsbuildinfo
+used_keywords.jsonc

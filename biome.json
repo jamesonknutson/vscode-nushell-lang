@@ -8,7 +8,13 @@
 			"semicolons": "asNeeded",
 			"arrowParentheses": "always",
 			"quoteProperties": "asNeeded",
-			"quoteStyle": "single"
+			"quoteStyle": "single",
+			"trailingCommas": "es5",
+			"lineEnding": "crlf",
+			"bracketSpacing": true,
+			"indentWidth": 2,
+			"indentStyle": "space",
+			"lineWidth": 120
 		}
 	},
 	"json": {
@@ -18,21 +24,29 @@
 		}
 	},
 	"formatter": {
-		"lineWidth": 120
+		"lineWidth": 120,
+		"lineEnding": "crlf",
+		"indentWidth": 2,
+		"indentStyle": "space",
+		"formatWithErrors": true
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
 			"complexity": {
-				"noBannedTypes": "off"
+				"noBannedTypes": "off",
+				"noForEach": "off",
+				"useLiteralKeys": "off",
+				"noStaticOnlyClass": "off"
 			},
 			"style": {
-				"useNodejsImportProtocol": "off",
-				"noUnusedTemplateLiteral": "off"
+				"noUnusedTemplateLiteral": "off",
+				"useImportType": "off"
 			},
 			"suspicious": {
-				"noExplicitAny": "off"
+				"noExplicitAny": "off",
+				"noAssignInExpressions": "off"
 			}
 		}
 	},
@@ -43,7 +57,9 @@
 			"**/dist/**",
 			"**/out/**",
 			"*.d.ts",
-			"language-configuration.json"
+			"**/*.js",
+			"**/*Untitled*",
+			"**/build/**"
 		],
 		"ignoreUnknown": true
 	}

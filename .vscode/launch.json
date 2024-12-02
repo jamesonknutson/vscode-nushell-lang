@@ -1,42 +1,47 @@
 // A launch configuration that compiles the extension and then opens it inside a new window
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "extensionHost",
-      "request": "launch",
-      "name": "Launch Client",
-      "runtimeExecutable": "${execPath}",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceRoot}",
-        "G:/dotfiles/.config/nushell"
-      ],
-      "preLaunchTask": {
-        "type": "npm",
-        "script": "compile"
-      }
-    },
-    {
-      "name": "Attach to Server",
-      "type": "node",
-      "request": "attach",
-      // "protocol": "inspector",
-      "resolveSourceMapLocations": ["${workspaceFolder}/**"],
-      "sourceMapRenames": true,
-      "port": 6009,
-      "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/**/*.(m|c|d|)(j|t)s"]
-    },
-    {
-      "name": "Language Server E2E Test",
-      "type": "extensionHost",
-      "request": "launch",
-      "runtimeExecutable": "${execPath}",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceRoot}",
-        "--extensionTestsPath=${workspaceRoot}/client/out/test/index",
-        "${workspaceRoot}/client/testFixture"
-      ]
-    }
-  ]
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "extensionHost",
+			"request": "launch",
+			"name": "Launch Client",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceRoot}",
+				"G:/dotfiles/.config/nushell"
+			],
+			"preLaunchTask": {
+				"type": "npm",
+				"script": "compile"
+			},
+			"autoAttachChildProcesses": true,
+		},
+		{
+			"name": "Attach to Server",
+			"type": "node",
+			"request": "attach",
+			// "protocol": "inspector",
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/**"
+			],
+			"sourceMapRenames": true,
+			"port": 6009,
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceFolder}/**/*.(m|c|d|)(j|t)s"
+			]
+		},
+		{
+			"name": "Language Server E2E Test",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceRoot}",
+				"--extensionTestsPath=${workspaceRoot}/client/out/test/index",
+				"${workspaceRoot}/client/testFixture"
+			]
+		}
+	]
 }
