@@ -12,7 +12,15 @@
 		"statusBarItem.hoverBackground": "#1f6fd077",
 		"statusBarItem.remoteBackground": "#1857a477",
 		"titleBar.activeBackground": "#1857a477",
-		"titleBar.inactiveBackground": "#1857a499"
+		"titleBar.inactiveBackground": "#1857a499",
+		"activityBar.foreground": "#e7e7e7",
+		"activityBar.inactiveForeground": "#e7e7e799",
+		"commandCenter.border": "#e7e7e799",
+		"statusBar.foreground": "#e7e7e7",
+		"statusBarItem.remoteForeground": "#e7e7e7",
+		"tab.activeBorder": "#1f6fd077",
+		"titleBar.activeForeground": "#e7e7e7",
+		"titleBar.inactiveForeground": "#e7e7e799"
 	},
 	"peacock.color": "#1857a477",
 	"editor.defaultFormatter": "biomejs.biome",
