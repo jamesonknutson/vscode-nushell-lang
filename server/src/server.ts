@@ -31,8 +31,6 @@ import {
   type Position,
 } from 'vscode-languageserver-protocol'
 
-import { stdout } from 'node:process'
-import { text } from 'node:stream/consumers'
 import { TextEncoder } from 'node:util'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 import { URI } from 'vscode-uri'
@@ -54,11 +52,11 @@ import { getCustomCompletions } from './custom'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const exec = util.promisify(require('node:child_process').exec as unknown as typeof _exec)
 
-const definitions = new Map<string, Promise<CompletionItem['documentation']>>()
+const definitions = new Map<string, Promise<CompletionItem[ 'documentation' ]>>()
 
 const tmpFile = tmp.fileSync({ prefix: 'nushell', keep: false })
 
-const tmpFiles: import('tmp').FileResult[] = [tmpFile]
+const tmpFiles: import('tmp').FileResult[] = [ tmpFile ]
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -71,7 +69,7 @@ let hasConfigurationCapability = false
 let hasWorkspaceFolderCapability = false
 let hasDiagnosticRelatedInformationCapability = false
 
-function includeFlagForPath(file_path: string): string {
+function includeFlagForPath (file_path: string): string {
   const parsed = URI.parse(file_path)
   if (parsed.scheme === 'file') {
     return `-I "${path.dirname(parsed.fsPath)}`
@@ -100,6 +98,10 @@ connection.onInitialize((params: InitializeParams) => {
       // Tell the client that this server supports code completion.
       completionProvider: {
         resolveProvider: true,
+        triggerCharacters: [ '$', '|', ';' ],
+        completionItem: {
+          labelDetailsSupport: true
+        }
       },
       inlayHintProvider: {
         resolveProvider: false,
@@ -119,10 +121,10 @@ connection.onInitialize((params: InitializeParams) => {
 })
 
 let labelid = 0
-function createLabel(name: string): string {
+function createLabel (name: string): string {
   return `${name}#${labelid++}`
 }
-async function durationLogWrapper<T>(name: string, fn: (label: string) => Promise<T>): Promise<T> {
+async function durationLogWrapper<T> (name: string, fn: (label: string) => Promise<T>): Promise<T> {
   console.log(`Triggered ${name}: ...`)
   const label = createLabel(name)
   console.time(label)
@@ -178,14 +180,14 @@ connection.onDidChangeConfiguration((change) => {
     // Reset all cached document settings
     documentSettings.clear()
   } else {
-    globalSettings = <NushellIDESettings>(change.settings.nushellLanguageServer || defaultSettings)
+    globalSettings = <NushellIDESettings> (change.settings.nushellLanguageServer || defaultSettings)
   }
 
   // Revalidate all open text documents
   documents.all().forEach(validateTextDocument)
 })
 
-function getDocumentSettings(resource: string): Thenable<NushellIDESettings> {
+function getDocumentSettings (resource: string): Thenable<NushellIDESettings> {
   if (!hasConfigurationCapability) {
     return Promise.resolve(globalSettings)
   }
@@ -205,10 +207,10 @@ documents.onDidClose((e) => {
   documentSettings.delete(e.document.uri)
 })
 
-function debounce(func: any, wait: number, immediate: boolean) {
+function debounce (func: any, wait: number, immediate: boolean) {
   let timeout: any
 
-  return function executedFunction(this: any, ...args: any[]) {
+  return function executedFunction (this: any, ...args: any[]) {
     const later = () => {
       timeout = null
       if (!immediate) func.apply(this, args)
@@ -231,7 +233,7 @@ documents.onDidChangeContent(
   })()
 )
 
-async function validateTextDocument(textDocument: NuTextDocument): Promise<void> {
+async function validateTextDocument (textDocument: NuTextDocument): Promise<void> {
   return await durationLogWrapper(`validateTextDocument ${textDocument.uri}`, async (label) => {
     if (!hasDiagnosticRelatedInformationCapability) {
       console.error('Trying to validate a document with no diagnostic capability')
@@ -302,7 +304,7 @@ async function validateTextDocument(textDocument: NuTextDocument): Promise<void>
             seenTypeHintPositions.add(obj.position)
             const position = convertSpan(obj.position.end, lineBreaks)
             const hint_string = `: ${obj.typename}`
-            const hint = InlayHint.create(position, [InlayHintLabelPart.create(hint_string)], InlayHintKind.Type)
+            const hint = InlayHint.create(position, [ InlayHintLabelPart.create(hint_string) ], InlayHintKind.Type)
 
             textDocument.nuInlayHints.push(hint)
           }
@@ -322,18 +324,18 @@ connection.onDidChangeWatchedFiles((_change) => {
   connection.console.log('We received an file change event')
 })
 
-function lowerBoundBinarySearch(arr: number[], num: number): number {
+function lowerBoundBinarySearch (arr: number[], num: number): number {
   let low = 0
   let mid = 0
   let high = arr.length - 1
 
-  if (num >= arr[high]) return high
+  if (num >= arr[ high ]) return high
 
   while (low < high) {
     // Bitshift to avoid floating point division
     mid = (low + high) >> 1
 
-    if (arr[mid] < num) {
+    if (arr[ mid ] < num) {
       low = mid + 1
     } else {
       high = mid
@@ -343,16 +345,16 @@ function lowerBoundBinarySearch(arr: number[], num: number): number {
   return low - 1
 }
 
-function convertSpan(utf8_offset: number, lineBreaks: Array<number>): Position {
+function convertSpan (utf8_offset: number, lineBreaks: Array<number>): Position {
   const lineBreakIndex = lowerBoundBinarySearch(lineBreaks, utf8_offset)
 
-  const start_of_line_offset = lineBreakIndex === -1 ? 0 : lineBreaks[lineBreakIndex] + 1
+  const start_of_line_offset = lineBreakIndex === -1 ? 0 : lineBreaks[ lineBreakIndex ] + 1
   const character = Math.max(0, utf8_offset - start_of_line_offset)
 
   return { line: lineBreakIndex + 1, character }
 }
 
-function convertPosition(position: Position, text: string): number {
+function convertPosition (position: Position, text: string): number {
   let line = 0
   let character = 0
   const buffer = new TextEncoder().encode(text)
@@ -376,7 +378,7 @@ function convertPosition(position: Position, text: string): number {
   return i
 }
 
-async function runCompiler(
+async function runCompiler (
   text: string, // this is the script or the snippet of nushell code
   flags: string,
   settings: NushellIDESettings,
@@ -456,7 +458,7 @@ connection.onHover(async (request: HoverParams) => {
 
         // FIXME: Figure out how to import `vscode` package in server.ts without
         // getting runtime import errors to remove this deprecation warning.
-        const contents: Hover['contents'] = {
+        const contents: Hover[ 'contents' ] = {
           value: obj.hover,
           kind: 'markdown',
         }
@@ -483,19 +485,21 @@ connection.onHover(async (request: HoverParams) => {
         connection.console.error(`Encountered error trying to parse hover info line ${line}, error: ${error}`)
       }
     }
+
+    connection.console.error(`Could not get any data out of stdout: ${stdout}`)
   })
 })
 
-async function getDefinition(
+async function getDefinition (
   text: string,
   textDocument: TextDocumentIdentifier
-): Promise<CompletionItem['documentation']> {
+): Promise<CompletionItem[ 'documentation' ]> {
   let output = definitions.get(text)
   if (output) {
     return output
   }
 
-  output = (async (): Promise<CompletionItem['documentation']> => {
+  output = (async (): Promise<CompletionItem[ 'documentation' ]> => {
     try {
       const document = documents.get(textDocument.uri)
       const settings = await getDocumentSettings(textDocument.uri)
@@ -675,7 +679,7 @@ connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
   return item
 })
 
-async function goToDefinition(
+async function goToDefinition (
   document: TextDocument,
   nushellOutput: string
 ): Promise<HandlerResult<Definition, void> | undefined> {
@@ -688,7 +692,9 @@ async function goToDefinition(
       const obj = JSON.parse(line)
       // connection.console.log("going to type definition");
       // connection.console.log(obj);
-      if (obj.file === '' || obj.file === '__prelude__') return
+      if (obj.file === '' || obj.file === '__prelude__') {
+        return
+      }
 
       let documentText: string
       if (obj.file) {
@@ -711,19 +717,27 @@ async function goToDefinition(
         uri = obj.file ? URI.file(obj.file).toString() : document.uri
       }
 
-      // connection.console.log(uri);
-
-      return {
-        uri: uri,
-        range: {
-          start: convertSpan(obj.start, lineBreaks),
-          end: convertSpan(obj.end, lineBreaks),
-        },
+      if (
+        typeof obj.start === 'number' &&
+        typeof obj.end === 'number'
+      ) {
+        // connection.console.log(uri);
+        const output = {
+          uri: uri,
+          range: {
+            start: convertSpan(obj.start, lineBreaks),
+            end: convertSpan(obj.end, lineBreaks),
+          },
+        };
+        return output
       }
+
     } catch (error) {
       connection.console.error(`Encountered error trying to JSON.parse gotoDefinition line ${line}: ${error}`)
     }
   }
+
+  connection.console.error(`Could not get any data out of document: ${document.uri} with text: ${nushellOutput}`)
 }
 
 connection.languages.inlayHint.on((params: InlayHintParams) => {
@@ -731,12 +745,12 @@ connection.languages.inlayHint.on((params: InlayHintParams) => {
   return document.nuInlayHints
 })
 
-function findLineBreaks(utf16_text: string): Array<number> {
+function findLineBreaks (utf16_text: string): Array<number> {
   const utf8_text = new TextEncoder().encode(utf16_text)
   const lineBreaks: Array<number> = []
 
   for (let i = 0; i < utf8_text.length; ++i) {
-    if (utf8_text[i] === 0x0a) {
+    if (utf8_text[ i ] === 0x0a) {
       lineBreaks.push(i)
     }
   }
@@ -752,10 +766,10 @@ documents.listen(connection)
 connection.listen()
 
 class CustomDefinitions {
-  private _definitions = new Map<string, Promise<CompletionItem['documentation']>>()
+  private _definitions = new Map<string, Promise<CompletionItem[ 'documentation' ]>>()
 }
 
-async function getDefaultScope({
+async function getDefaultScope ({
   includeDirs,
   maxNushellInvocationTime,
   nushellExecutablePath: binary,

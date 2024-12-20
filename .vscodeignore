@@ -22,3 +22,5 @@ cmds*.txt
 *cmds*.txt
 *.tsbuildinfo
 used_keywords.jsonc
+
+.github/

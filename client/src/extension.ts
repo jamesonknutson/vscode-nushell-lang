@@ -7,7 +7,6 @@
 import * as path from 'path';
 // import { workspace, ExtensionContext } from "vscode";
 import * as vscode from 'vscode';
-import * as which from 'which';
 
 import {
   LanguageClient,
@@ -18,11 +17,11 @@ import {
 
 let client: LanguageClient;
 
-export function activate(context: vscode.ExtensionContext) {
-  console.log(`Terminals: ${(<any>vscode.window).terminals.length}`);
+export function activate (context: vscode.ExtensionContext) {
+  console.log(`Terminals: ${(<any> vscode.window).terminals.length}`);
   context.subscriptions.push(
     vscode.window.registerTerminalProfileProvider('nushell_default', {
-      provideTerminalProfile(
+      provideTerminalProfile (
         token: vscode.CancellationToken,
       ): vscode.ProviderResult<vscode.TerminalProfile> {
         const which = require('which');
@@ -33,8 +32,8 @@ export function activate(context: vscode.ExtensionContext) {
           PATH_FROM_ENV,
           // cargo install location
           `${
-            // biome-ignore lint/complexity/useLiteralKeys: process.env is record
-            process.env['CARGO_HOME'] || '~/.cargo'
+          // biome-ignore lint/complexity/useLiteralKeys: process.env is record
+          process.env[ 'CARGO_HOME' ] || '~/.cargo'
           }/bin`,
 
           // winget on Windows install location
@@ -126,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // The debug options for the server
   // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
-  const debugOptions = { execArgv: ['--nolazy', '--inspect=6009'] };
+  const debugOptions = { execArgv: [ '--nolazy', '--inspect=6009' ] };
 
   // If the extension is launched in debug mode then the debug server options are used
   // Otherwise the run options are used
@@ -142,13 +141,14 @@ export function activate(context: vscode.ExtensionContext) {
   // Options to control the language client
   const clientOptions: LanguageClientOptions = {
     // Register the server for plain text documents
-    documentSelector: [{ scheme: 'file', language: 'nushell' }],
+    documentSelector: [ { scheme: 'file', language: 'nushell' } ],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
       fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc'),
     },
     markdown: {
       isTrusted: true,
+      supportHtml: true,
     },
   };
 
@@ -164,7 +164,7 @@ export function activate(context: vscode.ExtensionContext) {
   client.start();
 }
 
-export function deactivate(): Thenable<void> | undefined {
+export function deactivate (): Thenable<void> | undefined {
   if (!client) {
     return undefined;
   }
