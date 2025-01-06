@@ -44,6 +44,8 @@ import * as path from 'node:path'
 import * as tmp from 'tmp'
 
 // import util = require('node:util');
+import * as child_process from 'node:child_process'
+import * as util from 'node:util'
 
 import type { exec as _exec } from 'node:child_process'
 import * as util from 'node:util'
