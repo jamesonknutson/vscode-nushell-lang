@@ -252,30 +252,17 @@
   "def": {
     "prefix": "def",
     "description": "\"def\" invocation",
-    "body": [
-      "def ${1:name} [${2:param}: ${3:type}${4:, }] {",
-      "\t${5:command ...}$0",
-      "}"
-    ]
+    "body": ["def ${1:name} [${2:param}: ${3:type}${4:, }] {", "\t${5:command ...}$0", "}"]
   },
   "@def": {
     "prefix": "@def",
     "description": "\"def\" invocation",
-    "body": [
-      "# ${1:documentation}",
-      "def ${2:name} [${3:param}: ${4:type}${5:, }] {",
-      "\t${6:command}$0",
-      "}"
-    ]
+    "body": ["# ${1:documentation}", "def ${2:name} [${3:param}: ${4:type}${5:, }] {", "\t${6:command}$0", "}"]
   },
   "def-env": {
     "prefix": "def-env",
     "description": "\"def-env\" invocation",
-    "body": [
-      "def --env ${1:name} [${2:param}: ${3:type}${4:, }] {",
-      "\t${5:command ...}$0",
-      "}"
-    ]
+    "body": ["def --env ${1:name} [${2:param}: ${3:type}${4:, }] {", "\t${5:command ...}$0", "}"]
   },
   "@def-env": {
     "prefix": "@def-env",
@@ -290,21 +277,12 @@
   "def-wrapped": {
     "prefix": "def-wrapped",
     "description": "\"def-wrapped\" invocation",
-    "body": [
-      "def --wrapped ${1:name} [...${2:rest}] {",
-      "\t${3:command ...}$0",
-      "}"
-    ]
+    "body": ["def --wrapped ${1:name} [...${2:rest}] {", "\t${3:command ...}$0", "}"]
   },
   "@def-wrapped": {
     "prefix": "@def-wrapped",
     "description": "\"def-wrapped\" invocation",
-    "body": [
-      "# ${1:documentation}",
-      "def --wrapped ${2:name} [...${3:rest}] {",
-      "\t${4:command ...}$0",
-      "}"
-    ]
+    "body": ["# ${1:documentation}", "def --wrapped ${2:name} [...${3:rest}] {", "\t${4:command ...}$0", "}"]
   },
   "default": {
     "prefix": "default",
@@ -424,20 +402,12 @@
   "export def": {
     "prefix": "export-def",
     "description": "\"export def\" invocation",
-    "body": [
-      "export def ${1:name} [${2:param}: ${3:type}${4:, }] {",
-      "\t${5:command ...}",
-      "}"
-    ]
+    "body": ["export def ${1:name} [${2:param}: ${3:type}${4:, }] {", "\t${5:command ...}", "}"]
   },
   "export def-env": {
     "prefix": "export-def-env",
     "description": "\"export def-env\" invocation",
-    "body": [
-      "export def --env ${1:name} [${2:param}: ${3:type}${4:, }] {",
-      "\t${5:command ...}",
-      "}"
-    ]
+    "body": ["export def --env ${1:name} [${2:param}: ${3:type}${4:, }] {", "\t${5:command ...}", "}"]
   },
   "export extern": {
     "prefix": "export-extern",
@@ -507,20 +477,12 @@
   "for-stepped-range": {
     "prefix": "for-stepped-range",
     "description": "for with stepped range",
-    "body": [
-      "for ${1:item} in ${2:from}..${3:step}..${4:to}) {",
-      "\t${5:command ...}",
-      "}"
-    ]
+    "body": ["for ${1:item} in ${2:from}..${3:step}..${4:to}) {", "\t${5:command ...}", "}"]
   },
   "for-files": {
     "prefix": "for-files",
     "description": "for with files",
-    "body": [
-      "for ${1:item} in (ls *.${2:extension})",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["for ${1:item} in (ls *.${2:extension})", "\t${3:command ...}", "}"]
   },
   "format": {
     "prefix": "format",
@@ -630,13 +592,7 @@
   "if-else": {
     "prefix": "if-else",
     "description": "if-else operator",
-    "body": [
-      "if ${1:condition} {",
-      "\t${2:command ...}",
-      "} else {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:condition} {", "\t${2:command ...}", "} else {", "\t${3:command ...}", "}"]
   },
   "if else if else": {
     "prefix": "if-else-if-else operator",
@@ -654,56 +610,32 @@
   "if-less": {
     "prefix": "if-less",
     "description": "if with comparison",
-    "body": [
-      "if ${1:first-expression} < ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:first-expression} < ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "if-greater": {
     "prefix": "if-greater",
     "description": "if with comparison",
-    "body": [
-      "if ${1:first-expression} > ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:first-expression} > ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "if-less-or-equal": {
     "prefix": "if-less-or-equal",
     "description": "if with comparison",
-    "body": [
-      "if ${1:first-expression} <= ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:first-expression} <= ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "if-greater-or-equal": {
     "prefix": "if-greater-or-equal",
     "description": "if with comparison",
-    "body": [
-      "if ${1:first-expression} >= ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:first-expression} >= ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "if-equal": {
     "prefix": "if-equal",
     "description": "if with comparison",
-    "body": [
-      "if ${1:first-expression} == ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:first-expression} == ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "if-not-equal": {
     "prefix": "if-not-equal",
     "description": "if with comparison",
-    "body": [
-      "if ${1:first-expression} != ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["if ${1:first-expression} != ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "ignore": {
     "prefix": "ignore",
@@ -1293,56 +1225,32 @@
   "while-less": {
     "prefix": "while-less",
     "description": "while with comparison",
-    "body": [
-      "while ${1:first-expression} < ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["while ${1:first-expression} < ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "while-greater": {
     "prefix": "while-greater",
     "description": "while with comparison",
-    "body": [
-      "while ${1:first-expression} > ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["while ${1:first-expression} > ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "while-less-or-equal": {
     "prefix": "while-less-or-equal",
     "description": "while with comparison",
-    "body": [
-      "while ${1:first-expression} <= ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["while ${1:first-expression} <= ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "while-greater-or-equal": {
     "prefix": "while-greater-or-equal",
     "description": "while with comparison",
-    "body": [
-      "while ${1:first-expression} >= ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["while ${1:first-expression} >= ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "while-equal": {
     "prefix": "while-equal",
     "description": "while with comparison",
-    "body": [
-      "while ${1:first-expression} == ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["while ${1:first-expression} == ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "while-not-equal": {
     "prefix": "while-not-equal",
     "description": "while with comparison",
-    "body": [
-      "while ${1:first-expression} != ${2:second-expression} {",
-      "\t${3:command ...}",
-      "}"
-    ]
+    "body": ["while ${1:first-expression} != ${2:second-expression} {", "\t${3:command ...}", "}"]
   },
   "window": {
     "prefix": "window",
@@ -1367,11 +1275,7 @@
   "completion": {
     "prefix": "completion",
     "description": "completion",
-    "body": [
-      "def ${1:name} [${2:param}: ${3:type}@${4:complete}${5:, }] {",
-      "\t${6:completion ...}$0",
-      "}"
-    ]
+    "body": ["def ${1:name} [${2:param}: ${3:type}@${4:complete}${5:, }] {", "\t${6:completion ...}$0", "}"]
   },
   "@completion": {
     "prefix": "@completion",

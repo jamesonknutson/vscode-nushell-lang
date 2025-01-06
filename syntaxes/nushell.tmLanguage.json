@@ -169,9 +169,7 @@
         "0": { "name": "meta.brace.square.begin.nushell" }
       },
       "name": "constant.binary.nushell",
-      "patterns": [
-        { "match": "[0-9a-fA-F]{2}", "name": "constant.numeric.nushell" }
-      ]
+      "patterns": [{ "match": "[0-9a-fA-F]{2}", "name": "constant.numeric.nushell" }]
     },
     "constant-keywords": {
       "match": "\\b(?:true|false|null)\\b",
@@ -203,11 +201,7 @@
       "name": "keyword.control.nushell"
     },
     "operators": {
-      "patterns": [
-        { "include": "#operators-word" },
-        { "include": "#operators-symbols" },
-        { "include": "#ranges" }
-      ]
+      "patterns": [{ "include": "#operators-word" }, { "include": "#operators-symbols" }, { "include": "#ranges" }]
     },
     "table": {
       "begin": "\\[",
@@ -298,10 +292,7 @@
       "endCaptures": {
         "0": { "name": "meta.brace.square.end.nushell" }
       },
-      "patterns": [
-        { "include": "#function-parameter" },
-        { "include": "#comment" }
-      ],
+      "patterns": [{ "include": "#function-parameter" }, { "include": "#comment" }],
       "name": "meta.function.parameters.nushell"
     },
     "function-multiple-inout": {
@@ -656,11 +647,7 @@
       },
       "end": "(?=\\||\\)|\\}|;)|$",
       "name": "meta.command.nushell",
-      "patterns": [
-        { "include": "#parameters" },
-        { "include": "#spread" },
-        { "include": "#value" }
-      ]
+      "patterns": [{ "include": "#parameters" }, { "include": "#spread" }, { "include": "#value" }]
     },
     "expression": {
       "patterns": [

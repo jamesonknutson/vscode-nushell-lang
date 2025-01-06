@@ -19,25 +19,15 @@
     "vscode": "^1.93.0"
   },
   "icon": "assets/nushell.ico",
-  "categories": [
-    "Programming Languages",
-    "Snippets"
-  ],
-  "activationEvents": [
-    "onTerminalProfile:nushell_default"
-  ],
+  "categories": ["Programming Languages", "Snippets"],
+  "activationEvents": ["onTerminalProfile:nushell_default"],
   "main": "out/client/src/extension.js",
   "contributes": {
     "languages": [
       {
         "id": "nushell",
-        "aliases": [
-          "nushell",
-          "nu"
-        ],
-        "extensions": [
-          ".nu"
-        ],
+        "aliases": ["nushell", "nu"],
+        "extensions": [".nu"],
         "icon": {
           "light": "assets/nu.svg",
           "dark": "assets/nu.svg"
@@ -94,11 +84,7 @@
         "nushellLanguageServer.trace.server": {
           "scope": "window",
           "type": "string",
-          "enum": [
-            "off",
-            "messages",
-            "verbose"
-          ],
+          "enum": ["off", "messages", "verbose"],
           "default": "off",
           "description": "Traces the communication between VS Code and the language server."
         },
@@ -150,6 +136,7 @@
     "os": "0.1.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@types/mocha": "10.0.8",
     "@types/node": "22.6.0",
     "@types/tmp": "0.2.6",
@@ -167,12 +154,7 @@
     "webpack": "5.94.0",
     "webpack-cli": "5.1.4"
   },
-  "keywords": [
-    "nushell",
-    "nu",
-    "shell",
-    "scripting"
-  ],
+  "keywords": ["nushell", "nu", "shell", "scripting"],
   "galleryBanner": {
     "color": "#008000",
     "theme": "light"
